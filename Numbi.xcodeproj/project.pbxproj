@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D678F60BCE6D2BFBEFC9C1D /* Pods_NumbiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266DA017059E701261EF416C /* Pods_NumbiTests.framework */; };
+		80792240CD41D416241676AA /* Pods_Numbi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF15348B136BF85912D63D89 /* Pods_Numbi.framework */; };
 		D5F4923424521818006A8878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923324521818006A8878 /* AppDelegate.swift */; };
 		D5F4923D24521819006A8878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923C24521819006A8878 /* Assets.xcassets */; };
 		D5F4924024521819006A8878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923E24521819006A8878 /* LaunchScreen.storyboard */; };
@@ -30,6 +32,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		266DA017059E701261EF416C /* Pods_NumbiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NumbiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71216F68AD9BD30B3DE20645 /* Pods-Numbi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Numbi.release.xcconfig"; path = "Target Support Files/Pods-Numbi/Pods-Numbi.release.xcconfig"; sourceTree = "<group>"; };
+		8DF6719FDBF187CF320E4DB0 /* Pods-NumbiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NumbiTests.release.xcconfig"; path = "Target Support Files/Pods-NumbiTests/Pods-NumbiTests.release.xcconfig"; sourceTree = "<group>"; };
+		B15FA17B86B29AC2BEFCAA16 /* Pods-NumbiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NumbiTests.debug.xcconfig"; path = "Target Support Files/Pods-NumbiTests/Pods-NumbiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BD8A96ECCDCC7FC3F3736C83 /* Pods-Numbi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Numbi.debug.xcconfig"; path = "Target Support Files/Pods-Numbi/Pods-Numbi.debug.xcconfig"; sourceTree = "<group>"; };
+		CF15348B136BF85912D63D89 /* Pods_Numbi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Numbi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4923024521818006A8878 /* Numbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4923324521818006A8878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5F4923C24521819006A8878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80792240CD41D416241676AA /* Pods_Numbi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,18 +67,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D678F60BCE6D2BFBEFC9C1D /* Pods_NumbiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		027A81EBD84AA44AFED8842D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF15348B136BF85912D63D89 /* Pods_Numbi.framework */,
+				266DA017059E701261EF416C /* Pods_NumbiTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		09F88DD442795F659D365900 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BD8A96ECCDCC7FC3F3736C83 /* Pods-Numbi.debug.xcconfig */,
+				71216F68AD9BD30B3DE20645 /* Pods-Numbi.release.xcconfig */,
+				B15FA17B86B29AC2BEFCAA16 /* Pods-NumbiTests.debug.xcconfig */,
+				8DF6719FDBF187CF320E4DB0 /* Pods-NumbiTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		D5F4922724521818006A8878 = {
 			isa = PBXGroup;
 			children = (
 				D5F4923224521818006A8878 /* Numbi */,
 				D5F4924924521819006A8878 /* NumbiTests */,
 				D5F4923124521818006A8878 /* Products */,
+				09F88DD442795F659D365900 /* Pods */,
+				027A81EBD84AA44AFED8842D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5F4924F24521819006A8878 /* Build configuration list for PBXNativeTarget "Numbi" */;
 			buildPhases = (
+				3384555826D91D79921EE012 /* [CP] Check Pods Manifest.lock */,
 				D5F4922C24521818006A8878 /* Sources */,
 				D5F4922D24521818006A8878 /* Frameworks */,
 				D5F4922E24521818006A8878 /* Resources */,
+				9A9862E88BFFBE6DD2F903F5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -156,6 +191,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5F4925224521819006A8878 /* Build configuration list for PBXNativeTarget "NumbiTests" */;
 			buildPhases = (
+				02A51D6D0658B4DAD780C36A /* [CP] Check Pods Manifest.lock */,
 				D5F4924224521819006A8878 /* Sources */,
 				D5F4924324521819006A8878 /* Frameworks */,
 				D5F4924424521819006A8878 /* Resources */,
@@ -226,6 +262,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		02A51D6D0658B4DAD780C36A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NumbiTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3384555826D91D79921EE012 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Numbi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A9862E88BFFBE6DD2F903F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Numbi/Pods-Numbi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Numbi/Pods-Numbi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Numbi/Pods-Numbi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5F4922C24521818006A8878 /* Sources */ = {
@@ -388,6 +488,7 @@
 		};
 		D5F4925024521819006A8878 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD8A96ECCDCC7FC3F3736C83 /* Pods-Numbi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -407,6 +508,7 @@
 		};
 		D5F4925124521819006A8878 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71216F68AD9BD30B3DE20645 /* Pods-Numbi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -426,6 +528,7 @@
 		};
 		D5F4925324521819006A8878 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B15FA17B86B29AC2BEFCAA16 /* Pods-NumbiTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -448,6 +551,7 @@
 		};
 		D5F4925424521819006A8878 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8DF6719FDBF187CF320E4DB0 /* Pods-NumbiTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
