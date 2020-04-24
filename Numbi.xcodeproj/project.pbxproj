@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		D5F4923424521818006A8878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923324521818006A8878 /* AppDelegate.swift */; };
-		D5F4923624521818006A8878 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923524521818006A8878 /* SceneDelegate.swift */; };
-		D5F4923824521818006A8878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923724521818006A8878 /* ViewController.swift */; };
-		D5F4923B24521818006A8878 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923924521818006A8878 /* Main.storyboard */; };
 		D5F4923D24521819006A8878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923C24521819006A8878 /* Assets.xcassets */; };
 		D5F4924024521819006A8878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923E24521819006A8878 /* LaunchScreen.storyboard */; };
 		D5F4924B24521819006A8878 /* NumbiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4924A24521819006A8878 /* NumbiTests.swift */; };
+		D5F4925624522167006A8878 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4925524522167006A8878 /* NoteViewController.swift */; };
+		D5F4925A245222D5006A8878 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F49259245222D5006A8878 /* NoteTableViewCell.swift */; };
+		D5F4925C24523A92006A8878 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4925B24523A92006A8878 /* NoteView.swift */; };
+		D5F4926124523B54006A8878 /* NoteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4926024523B54006A8878 /* NoteDataModel.swift */; };
+		D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4926324523D84006A8878 /* NoteViewModel.swift */; };
+		D5F4926824524269006A8878 /* NoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4926724524269006A8878 /* NoteDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,15 +32,18 @@
 /* Begin PBXFileReference section */
 		D5F4923024521818006A8878 /* Numbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4923324521818006A8878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D5F4923524521818006A8878 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D5F4923724521818006A8878 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D5F4923A24521818006A8878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D5F4923C24521819006A8878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5F4923F24521819006A8878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5F4924124521819006A8878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5F4924624521819006A8878 /* NumbiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NumbiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4924A24521819006A8878 /* NumbiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbiTests.swift; sourceTree = "<group>"; };
 		D5F4924C24521819006A8878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5F4925524522167006A8878 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		D5F49259245222D5006A8878 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
+		D5F4925B24523A92006A8878 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		D5F4926024523B54006A8878 /* NoteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataModel.swift; sourceTree = "<group>"; };
+		D5F4926324523D84006A8878 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModel.swift; sourceTree = "<group>"; };
+		D5F4926724524269006A8878 /* NoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +86,9 @@
 			isa = PBXGroup;
 			children = (
 				D5F4923324521818006A8878 /* AppDelegate.swift */,
-				D5F4923524521818006A8878 /* SceneDelegate.swift */,
-				D5F4923724521818006A8878 /* ViewController.swift */,
-				D5F4923924521818006A8878 /* Main.storyboard */,
+				D5F4926224523B5B006A8878 /* Models */,
+				D5F492662452424D006A8878 /* View Models */,
+				D5F4925D24523AC6006A8878 /* Views */,
 				D5F4923C24521819006A8878 /* Assets.xcassets */,
 				D5F4923E24521819006A8878 /* LaunchScreen.storyboard */,
 				D5F4924124521819006A8878 /* Info.plist */,
@@ -97,6 +103,33 @@
 				D5F4924C24521819006A8878 /* Info.plist */,
 			);
 			path = NumbiTests;
+			sourceTree = "<group>";
+		};
+		D5F4925D24523AC6006A8878 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5F4925524522167006A8878 /* NoteViewController.swift */,
+				D5F49259245222D5006A8878 /* NoteTableViewCell.swift */,
+				D5F4925B24523A92006A8878 /* NoteView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D5F4926224523B5B006A8878 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D5F4926024523B54006A8878 /* NoteDataModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D5F492662452424D006A8878 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				D5F4926324523D84006A8878 /* NoteViewModel.swift */,
+				D5F4926724524269006A8878 /* NoteDataSource.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,7 +215,6 @@
 			files = (
 				D5F4924024521819006A8878 /* LaunchScreen.storyboard in Resources */,
 				D5F4923D24521819006A8878 /* Assets.xcassets in Resources */,
-				D5F4923B24521818006A8878 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,9 +232,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5F4923824521818006A8878 /* ViewController.swift in Sources */,
+				D5F4925624522167006A8878 /* NoteViewController.swift in Sources */,
+				D5F4925A245222D5006A8878 /* NoteTableViewCell.swift in Sources */,
+				D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */,
+				D5F4925C24523A92006A8878 /* NoteView.swift in Sources */,
+				D5F4926824524269006A8878 /* NoteDataSource.swift in Sources */,
 				D5F4923424521818006A8878 /* AppDelegate.swift in Sources */,
-				D5F4923624521818006A8878 /* SceneDelegate.swift in Sources */,
+				D5F4926124523B54006A8878 /* NoteDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,14 +261,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D5F4923924521818006A8878 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D5F4923A24521818006A8878 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D5F4923E24521819006A8878 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -365,6 +393,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KVLZH7HMMQ;
 				INFOPLIST_FILE = Numbi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -372,7 +401,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = v.slobodianiuk.Numbi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -383,6 +412,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KVLZH7HMMQ;
 				INFOPLIST_FILE = Numbi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +420,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = v.slobodianiuk.Numbi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
