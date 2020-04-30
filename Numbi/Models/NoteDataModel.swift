@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct CalculatedData {
+struct NoteData {
     let noteText: String
 }

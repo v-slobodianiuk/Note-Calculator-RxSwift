@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0D678F60BCE6D2BFBEFC9C1D /* Pods_NumbiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266DA017059E701261EF416C /* Pods_NumbiTests.framework */; };
 		80792240CD41D416241676AA /* Pods_Numbi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF15348B136BF85912D63D89 /* Pods_Numbi.framework */; };
+		D5E14051245334F100CA1D73 /* NoteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E14050245334F100CA1D73 /* NoteTextView.swift */; };
 		D5F4923424521818006A8878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923324521818006A8878 /* AppDelegate.swift */; };
 		D5F4923D24521819006A8878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923C24521819006A8878 /* Assets.xcassets */; };
 		D5F4924024521819006A8878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923E24521819006A8878 /* LaunchScreen.storyboard */; };
@@ -38,6 +39,7 @@
 		B15FA17B86B29AC2BEFCAA16 /* Pods-NumbiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NumbiTests.debug.xcconfig"; path = "Target Support Files/Pods-NumbiTests/Pods-NumbiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BD8A96ECCDCC7FC3F3736C83 /* Pods-Numbi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Numbi.debug.xcconfig"; path = "Target Support Files/Pods-Numbi/Pods-Numbi.debug.xcconfig"; sourceTree = "<group>"; };
 		CF15348B136BF85912D63D89 /* Pods_Numbi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Numbi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5E14050245334F100CA1D73 /* NoteTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTextView.swift; sourceTree = "<group>"; };
 		D5F4923024521818006A8878 /* Numbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4923324521818006A8878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5F4923C24521819006A8878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,7 +93,6 @@
 				B15FA17B86B29AC2BEFCAA16 /* Pods-NumbiTests.debug.xcconfig */,
 				8DF6719FDBF187CF320E4DB0 /* Pods-NumbiTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -144,6 +145,7 @@
 				D5F4925524522167006A8878 /* NoteViewController.swift */,
 				D5F49259245222D5006A8878 /* NoteTableViewCell.swift */,
 				D5F4925B24523A92006A8878 /* NoteView.swift */,
+				D5E14050245334F100CA1D73 /* NoteTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -335,6 +337,7 @@
 				D5F4925624522167006A8878 /* NoteViewController.swift in Sources */,
 				D5F4925A245222D5006A8878 /* NoteTableViewCell.swift in Sources */,
 				D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */,
+				D5E14051245334F100CA1D73 /* NoteTextView.swift in Sources */,
 				D5F4925C24523A92006A8878 /* NoteView.swift in Sources */,
 				D5F4926824524269006A8878 /* NoteDataSource.swift in Sources */,
 				D5F4923424521818006A8878 /* AppDelegate.swift in Sources */,

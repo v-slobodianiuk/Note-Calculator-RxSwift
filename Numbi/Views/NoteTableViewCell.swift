@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import MathParser
 
 class NoteTableViewCell: UITableViewCell {
     
     var resultView = UIView()
-    var textView = UITextView()
+    var textView = NoteTextView()
     var resultLabel = UILabel()
     
     var textChanged: ((String) -> Void)?
@@ -23,8 +26,17 @@ class NoteTableViewCell: UITableViewCell {
         constraints()
     }
     
+    func  customizeColor(string: String, color: UIColor) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: string, attributes:
+            [NSAttributedString.Key.foregroundColor : color ])
+    }
+    
     func textChanged(action: @escaping (String) -> Void) {
         self.textChanged = action
+    }
+    
+    func getText(text: String) {
+        textView.text = text
     }
     
     private func setupUI() {
@@ -32,10 +44,12 @@ class NoteTableViewCell: UITableViewCell {
         self.contentView.addSubview(resultView)
         resultView.addSubview(resultLabel)
         
-        textView.text = "Text View text"
         textView.isScrollEnabled = false
+        textView.becomeFirstResponder()
+        textView.font = .systemFont(ofSize: 18)
         resultView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
-        resultLabel.text = "Result Label Text"
+        resultLabel.textAlignment = .right
+        resultLabel.font = UIFont.boldSystemFont(ofSize: 18)
         resultLabel.adjustsFontSizeToFitWidth = true
     }
     
@@ -43,7 +57,7 @@ class NoteTableViewCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0).isActive = true
         textView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
-        textView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.8).isActive = true
+        textView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor, multiplier: 0.7).isActive = true
         textView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0).isActive = true
         
         resultView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +87,22 @@ class NoteTableViewCell: UITableViewCell {
 }
 
 extension NoteTableViewCell: UITextViewDelegate {
+    
     func textViewDidChange(_ textView: UITextView) {
         textChanged?(textView.text)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            if GenericDataSource.rxData.value.first == "" {
+                GenericDataSource.rxData.accept(["\(textView.text ?? "")"] + [""])
+            } else {
+                var update = GenericDataSource.rxData.value
+                update[GenericDataSource.rxData.value.count - 1] = "\(textView.text ?? "")"
+                GenericDataSource.rxData.accept(update + [""])
+            }
+            return false
+        }
+        return true
     }
 }
