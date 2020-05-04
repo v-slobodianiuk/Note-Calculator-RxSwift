@@ -23,23 +23,11 @@ class NoteTableViewCell: UITableViewCell {
     let keyboard = NumbiKeyboard()
     var keyboardBar: UIToolbar!
     
-    var textChanged: ((String) -> Void)?
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         textView.delegate = self
-        keyboard.delegate = self
         setupUI()
         constraints()
-    }
-    
-    func  customizeColor(string: String, color: UIColor) -> NSMutableAttributedString {
-        return NSMutableAttributedString(string: string, attributes:
-            [NSAttributedString.Key.foregroundColor : color ])
-    }
-    
-    func textChanged(action: @escaping (String) -> Void) {
-        self.textChanged = action
     }
     
     func getText(text: String) {
@@ -70,10 +58,19 @@ class NoteTableViewCell: UITableViewCell {
         resultLabel.adjustsFontSizeToFitWidth = true
         
         keyboard.keyTitle
-            .subscribe(onNext: { str in
-                print(str)
+            .subscribe(onNext: { keyValue in
+                self.keyWasTapped(character: keyValue)
+
             })
         .disposed(by: disposeBag)
+        
+//        textView.rx.didChange.subscribe(onNext: {
+//            if self.textView.text.contains("\n") {
+//                print("Contains")
+//                self.noteViewModel.setupCell(self.textView)
+//            }
+//        })
+//        .disposed(by: self.disposeBag)
     }
     
     @objc func itemTapped(sender: UIBarButtonItem) {
@@ -83,7 +80,6 @@ class NoteTableViewCell: UITableViewCell {
             textView.inputView = nil
             textView.reloadInputViews()
         default:
-
             textView.inputView = keyboard
             textView.reloadInputViews()
         }
@@ -107,41 +103,6 @@ class NoteTableViewCell: UITableViewCell {
         resultLabel.trailingAnchor.constraint(equalTo: self.resultView.trailingAnchor, constant: -10).isActive = true
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-}
-
-extension NoteTableViewCell: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        textChanged?(textView.text)
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            noteViewModel.setupCell(textView)
-            return false
-        }
-        return true
-    }
-}
-
-extension NoteTableViewCell: KeyboardDelegate {
-    func returnWasTapped() {
-        textView.insertText("\n")
-    }
-    
     func deleteWasTapped() {
         textView.deleteBackward()
     }
@@ -159,8 +120,36 @@ extension NoteTableViewCell: KeyboardDelegate {
             textView.insertText("*")
         case "÷":
             textView.insertText("/")
+        case "delete":
+            deleteWasTapped()
+        case "return":
+            noteViewModel.setupCell(textView)
         default:
             textView.insertText(character)
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
+}
+
+extension NoteTableViewCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            noteViewModel.setupCell(textView)
+            return false
+        }
+        return true
     }
 }

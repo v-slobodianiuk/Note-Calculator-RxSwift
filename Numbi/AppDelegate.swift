@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
+        
+        NoteViewModel.loadData()
 
         return true
     }

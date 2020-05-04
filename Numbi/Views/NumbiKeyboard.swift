@@ -10,17 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-protocol KeyboardDelegate {
-    func keyWasTapped(character: String)
-    func deleteWasTapped()
-    func returnWasTapped()
-}
-
 class NumbiKeyboard: UIView {
     
-    private let disposeBag = DisposeBag()
-    
-    private var keyTitleSubject = PublishSubject<String>()
+    private let keyTitleSubject = PublishSubject<String>()
     var keyTitle: Observable<String> {
       return keyTitleSubject.asObservable()
     }
@@ -42,8 +34,6 @@ class NumbiKeyboard: UIView {
     let orangeArray = [3, 4, 8, 9, 13, 14, 18, 19]
     var slides = [UIView] ()
     
-    var delegate: KeyboardDelegate?
-    
     var buttons: [KeyboardButton] = []
     var buttonsTitle = ["7", "8", "9", " ", " ",
                         "4", "5", "6", "×", "÷",
@@ -51,9 +41,10 @@ class NumbiKeyboard: UIView {
                         ".", "0", "-", " ", " ",
     ]
     
+    private let disposeBag = DisposeBag()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //scrollView.delegate = self
         
         for _ in 1...20 {
             buttons.append(KeyboardButton())
@@ -89,10 +80,9 @@ class NumbiKeyboard: UIView {
         for (i, button) in buttons.enumerated() {
             button.setTitle("\(buttonsTitle[i])", for: .normal)
             button.tag = i
-            //button.addTarget(self, action: #selector(tappedButton(sender:)), for: .touchUpInside)
-            button.rx.tap.bind { (send) in
+
+            button.rx.tap.bind {
                 self.tappedButton(sender: button)
-                //print(button.rx.title())
             }
             .disposed(by: disposeBag)
             
@@ -119,7 +109,6 @@ class NumbiKeyboard: UIView {
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         
-        //testView1.backgroundColor = .blue
         testView2.backgroundColor = .red
         testView3.backgroundColor = .gray
         
@@ -233,46 +222,20 @@ class NumbiKeyboard: UIView {
         }
     }
     
-//    @objc func tappedButton(sender: UIButton) {
-//
-//        guard let keyLabel = sender.titleLabel?.text else { return }
-//        delegate?.keyWasTapped(character: keyLabel)
-//        guard let imageTitle = sender.currentImage?.description else { return }
-//        if imageTitle.contains("delete.left") {
-//            delegate?.deleteWasTapped()
-//        } else if imageTitle.contains("return") {
-//            delegate?.returnWasTapped()
-//        }
-//    }
-    
     func tappedButton(sender: UIButton) {
 
         guard let keyLabel = sender.titleLabel?.text else { return }
-//        keyTitleSubject.subscribe(onNext: {
-//
-//        })
         keyTitleSubject.on(.next(keyLabel))
-        //keyTitle = keyLabel
-        
-        delegate?.keyWasTapped(character: keyLabel)
         
         guard let imageTitle = sender.currentImage?.description else { return }
         if imageTitle.contains("delete.left") {
-            delegate?.deleteWasTapped()
+            keyTitleSubject.on(.next("delete"))
         } else if imageTitle.contains("return") {
-            delegate?.returnWasTapped()
+            keyTitleSubject.on(.next("return"))
         }
     }
 
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-//extension NumbiKeyboard: UIScrollViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let pageIndex = round(scrollView.contentOffset.x/self.frame.width)
-//        pageControl.currentPage = Int(pageIndex)
-//    }
-//}

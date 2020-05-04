@@ -15,6 +15,7 @@ class NoteViewModel {
     let NoteNavTitle = "Numbi"
     let NoteCellId = "Note Cell"
     //var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
+    static let defaults = UserDefaults.standard
     static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
     
     func previousCell(textView: UITextView) {
@@ -32,6 +33,14 @@ class NoteViewModel {
             var update = NoteViewModel.rxData.value
             update[NoteViewModel.rxData.value.count - 1] = "\(textView.text ?? "")"
             NoteViewModel.rxData.accept(update + [""])
+        }
+    }
+    
+    static func loadData() {
+        if NoteViewModel.defaults.object(forKey: "Data") != nil {
+            if let saveData = NoteViewModel.defaults.object(forKey: "Data") as? [String] {
+                NoteViewModel.rxData.accept(saveData)
+            }
         }
     }
 }
