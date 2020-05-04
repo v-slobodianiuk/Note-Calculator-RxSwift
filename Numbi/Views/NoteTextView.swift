@@ -9,12 +9,11 @@
 import UIKit
 
 class NoteTextView: UITextView {
+    
+    lazy var noteViewModel = NoteViewModel()
+    
     override func deleteBackward() {
         super.deleteBackward()
-        guard GenericDataSource.rxData.value.count > 1 else { return }
-        guard self.text == "" else { return }
-        var update = GenericDataSource.rxData.value
-        update.removeLast()
-        GenericDataSource.rxData.accept(update)
+        noteViewModel.previousCell(textView: self)
     }
 }

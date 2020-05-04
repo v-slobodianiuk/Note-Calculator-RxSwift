@@ -17,8 +17,7 @@ class NoteViewController: UIViewController {
     
     let noteView = NoteView()
     let noteViewModel = NoteViewModel()
-    let dataSource = NoteDataSource()
-    let tableData = GenericDataSource.rxData
+    //let tableData = GenericDataSource.rxData
     private let throttleIntervalInMilliseconds = 500
     
     override func loadView() {
@@ -28,24 +27,29 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = noteViewModel.NoteNavTitle
+        if #available(iOS 13, *) {
+            let leftButton = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .plain, target: self, action: nil)
+            let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+            self.navigationItem.leftBarButtonItem = leftButton
+            self.navigationItem.rightBarButtonItem = rightButton
+        }
         
-        self.title = noteViewModel.title
         
-        noteView.tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: dataSource.cellId)
+        noteView.tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: noteViewModel.NoteCellId)
         
         setupCellConfiguration()
-        
-        //noteView.tableView.dataSource = self.dataSource
+
         
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
     func setupCellConfiguration() {
-        tableData
+        NoteViewModel.rxData
             .bind(to: noteView.tableView
                 .rx
-                .items(cellIdentifier: dataSource.cellId, cellType: NoteTableViewCell.self)) { row, element, cell in
+                .items(cellIdentifier: noteViewModel.NoteCellId, cellType: NoteTableViewCell.self)) { row, element, cell in
                     DispatchQueue.main.async {
                         cell.getText(text: element)
                         
@@ -78,6 +82,6 @@ class NoteViewController: UIViewController {
                         }
                     }
         }
-            .disposed(by: disposeBag) //5
+            .disposed(by: disposeBag)
     }
 }

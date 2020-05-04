@@ -13,15 +13,22 @@ import MathParser
 
 class NoteTableViewCell: UITableViewCell {
     
+    private let disposeBag = DisposeBag()
+    
+    var noteViewModel = NoteViewModel()
+    
     var resultView = UIView()
     var textView = NoteTextView()
     var resultLabel = UILabel()
+    let keyboard = NumbiKeyboard()
+    var keyboardBar: UIToolbar!
     
     var textChanged: ((String) -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         textView.delegate = self
+        keyboard.delegate = self
         setupUI()
         constraints()
     }
@@ -45,12 +52,41 @@ class NoteTableViewCell: UITableViewCell {
         resultView.addSubview(resultLabel)
         
         textView.isScrollEnabled = false
-        textView.becomeFirstResponder()
+        //textView.inputView = keyboard
+        //textView.becomeFirstResponder()
         textView.font = .systemFont(ofSize: 18)
+        
+        
+        keyboardBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
+        let defaultKeyboard = UIBarButtonItem(title: "ABC", style: .plain, target: self, action: #selector(itemTapped))
+        let numbiKeyboard = UIBarButtonItem(title: "123", style: .plain, target: self, action: #selector(itemTapped))
+        keyboardBar.items = [defaultKeyboard, numbiKeyboard]
+        textView.autocorrectionType = .no
+        textView.inputAccessoryView = keyboardBar
+        
         resultView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         resultLabel.textAlignment = .right
         resultLabel.font = UIFont.boldSystemFont(ofSize: 18)
         resultLabel.adjustsFontSizeToFitWidth = true
+        
+        keyboard.keyTitle
+            .subscribe(onNext: { str in
+                print(str)
+            })
+        .disposed(by: disposeBag)
+    }
+    
+    @objc func itemTapped(sender: UIBarButtonItem) {
+        guard let title = sender.title else { return }
+        switch title {
+        case "ABC":
+            textView.inputView = nil
+            textView.reloadInputViews()
+        default:
+
+            textView.inputView = keyboard
+            textView.reloadInputViews()
+        }
     }
     
     private func constraints() {
@@ -94,15 +130,37 @@ extension NoteTableViewCell: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            if GenericDataSource.rxData.value.first == "" {
-                GenericDataSource.rxData.accept(["\(textView.text ?? "")"] + [""])
-            } else {
-                var update = GenericDataSource.rxData.value
-                update[GenericDataSource.rxData.value.count - 1] = "\(textView.text ?? "")"
-                GenericDataSource.rxData.accept(update + [""])
-            }
+            noteViewModel.setupCell(textView)
             return false
         }
         return true
+    }
+}
+
+extension NoteTableViewCell: KeyboardDelegate {
+    func returnWasTapped() {
+        textView.insertText("\n")
+    }
+    
+    func deleteWasTapped() {
+        textView.deleteBackward()
+    }
+    
+    func keyWasTapped(character: String) {
+        
+        guard character != " " else { return }
+        
+        switch character {
+        case "+":
+            textView.insertText("+")
+        case "−":
+            textView.insertText("-")
+        case "×":
+            textView.insertText("*")
+        case "÷":
+            textView.insertText("/")
+        default:
+            textView.insertText(character)
+        }
     }
 }
