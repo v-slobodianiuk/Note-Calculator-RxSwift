@@ -32,7 +32,7 @@ class NewNoteView: UIView {
         tableView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.3)
         
         textView.font = .systemFont(ofSize: 18)
-        textView.text = "10101010011001010101010101010101101010100110010101010101010101011010101001100101010101010101010110101010011001010101010101010101"
+//        textView.text = "10101010011001010101010101010101101010100110010101010101010101011010101001100101010101010101010110101010011001010101010101010101"
         
 //        tableView.estimatedRowHeight = 85.0
 //        tableView.rowHeight = UITableView.automaticDimension
