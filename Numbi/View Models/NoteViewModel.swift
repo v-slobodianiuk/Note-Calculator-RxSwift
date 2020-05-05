@@ -16,7 +16,8 @@ class NoteViewModel {
     let NoteCellId = "Note Cell"
     //var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
     static let defaults = UserDefaults.standard
-    static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
+    //static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: ["10101010011001010101010101010101", "2", "3"])
+    static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: ["\n\n\n101", "2", "3"])
     
     func previousCell(textView: UITextView) {
         guard NoteViewModel.rxData.value.count > 1 else { return }

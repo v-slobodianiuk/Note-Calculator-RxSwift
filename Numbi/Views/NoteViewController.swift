@@ -37,9 +37,9 @@ class NoteViewController: UIViewController {
         }
         
         
-        noteView.tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: noteViewModel.NoteCellId)
+        //noteView.tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: noteViewModel.NoteCellId)
          
-        setupCellConfiguration()
+        //setupCellConfiguration()
         
         DispatchQueue.main.async {
             self.noteView.tableView.reloadData()

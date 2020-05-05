@@ -13,6 +13,9 @@
 		D5007074245FEF0400B0628C /* ListViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5007073245FEF0400B0628C /* ListViewDataModel.swift */; };
 		D51773F1245B2FAE00B067CC /* NumbiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */; };
 		D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F2245B3A5000B067CC /* KeyboardButton.swift */; };
+		D5DD3950246173E40001A8FE /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD394F246173E40001A8FE /* NewNoteViewController.swift */; };
+		D5DD39522461740E0001A8FE /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD39512461740E0001A8FE /* NewNoteView.swift */; };
+		D5DD3954246174310001A8FE /* NewNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD3953246174310001A8FE /* NewNoteTableViewCell.swift */; };
 		D5E14051245334F100CA1D73 /* NoteTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E14050245334F100CA1D73 /* NoteTextView.swift */; };
 		D5F4923424521818006A8878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923324521818006A8878 /* AppDelegate.swift */; };
 		D5F4923D24521819006A8878 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5F4923C24521819006A8878 /* Assets.xcassets */; };
@@ -46,6 +49,9 @@
 		D5007073245FEF0400B0628C /* ListViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataModel.swift; sourceTree = "<group>"; };
 		D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbiKeyboard.swift; sourceTree = "<group>"; };
 		D51773F2245B3A5000B067CC /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
+		D5DD394F246173E40001A8FE /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
+		D5DD39512461740E0001A8FE /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
+		D5DD3953246174310001A8FE /* NewNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteTableViewCell.swift; sourceTree = "<group>"; };
 		D5E14050245334F100CA1D73 /* NoteTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTextView.swift; sourceTree = "<group>"; };
 		D5F4923024521818006A8878 /* Numbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5F4923324521818006A8878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +108,33 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D5DD3955246174440001A8FE /* NewNote */ = {
+			isa = PBXGroup;
+			children = (
+				D5DD394F246173E40001A8FE /* NewNoteViewController.swift */,
+				D5DD39512461740E0001A8FE /* NewNoteView.swift */,
+				D5DD3953246174310001A8FE /* NewNoteTableViewCell.swift */,
+			);
+			path = NewNote;
+			sourceTree = "<group>";
+		};
+		D5DD3956246174560001A8FE /* ListOfNotes */ = {
+			isa = PBXGroup;
+			children = (
+				D5007071245FEE2000B0628C /* ListViewController.swift */,
+			);
+			path = ListOfNotes;
+			sourceTree = "<group>";
+		};
+		D5DD39572461747A0001A8FE /* NumbiKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */,
+				D51773F2245B3A5000B067CC /* KeyboardButton.swift */,
+			);
+			path = NumbiKeyboard;
+			sourceTree = "<group>";
+		};
 		D5F4922724521818006A8878 = {
 			isa = PBXGroup;
 			children = (
@@ -148,13 +181,13 @@
 		D5F4925D24523AC6006A8878 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D5DD3955246174440001A8FE /* NewNote */,
+				D5DD3956246174560001A8FE /* ListOfNotes */,
+				D5DD39572461747A0001A8FE /* NumbiKeyboard */,
+				D5E14050245334F100CA1D73 /* NoteTextView.swift */,
 				D5F4925524522167006A8878 /* NoteViewController.swift */,
 				D5F49259245222D5006A8878 /* NoteTableViewCell.swift */,
 				D5F4925B24523A92006A8878 /* NoteView.swift */,
-				D5007071245FEE2000B0628C /* ListViewController.swift */,
-				D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */,
-				D51773F2245B3A5000B067CC /* KeyboardButton.swift */,
-				D5E14050245334F100CA1D73 /* NoteTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -345,13 +378,16 @@
 			files = (
 				D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */,
 				D5F4925624522167006A8878 /* NoteViewController.swift in Sources */,
+				D5DD3954246174310001A8FE /* NewNoteTableViewCell.swift in Sources */,
 				D5F4925A245222D5006A8878 /* NoteTableViewCell.swift in Sources */,
 				D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */,
 				D5E14051245334F100CA1D73 /* NoteTextView.swift in Sources */,
+				D5DD3950246173E40001A8FE /* NewNoteViewController.swift in Sources */,
 				D5007072245FEE2000B0628C /* ListViewController.swift in Sources */,
 				D5F4925C24523A92006A8878 /* NoteView.swift in Sources */,
 				D5007074245FEF0400B0628C /* ListViewDataModel.swift in Sources */,
 				D5F4923424521818006A8878 /* AppDelegate.swift in Sources */,
+				D5DD39522461740E0001A8FE /* NewNoteView.swift in Sources */,
 				D51773F1245B2FAE00B067CC /* NumbiKeyboard.swift in Sources */,
 				D5F4926124523B54006A8878 /* NoteDataModel.swift in Sources */,
 			);
