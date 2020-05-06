@@ -35,77 +35,35 @@ class NewNoteViewController: UIViewController {
             .distinctUntilChanged()
             .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
             .subscribe(onNext: {
-            let rows = self.lineCounter(self.noteView.leftTextView)
-            //print(rows)
-            guard let ch = $0?.last else { return }
-            guard let input = self.noteView.leftTextView.text else { return }
-            
-            
-            if ch == "\n" {
-                self.tempResult.append(self.math(startIndex: self.textViewIndex, endIndex: input.count - 1, input: input))
-                if rows >= 1 {
-                    print(rows)
-                    for _ in 0..<1 {
-                        self.tempResult.append("\n")
-                        print("Return added")
-                    }
+                //let rows = self.lineCounter(self.noteView.leftTextView)
+                //print(rows)
+                
+                
+                
+                guard let ch = $0?.last else { return }
+                
+                if ch == "\n" {
+                    let result = self.splitPlusSeparator($0!, separator: "\n")
                 }
-                self.textViewIndex = input.count - 1
-            } else {
-                if rows <= 1 {
-                   self.noteView.rightTextView.text = self.math(startIndex: self.textViewIndex, endIndex: nil, input: input)
-                } else {
-                    self.noteView.rightTextView.text = self.tempResult + self.math(startIndex: self.textViewIndex, endIndex: nil, input: input)
-                }
-            }
-            
-        })
+                
+            })
             .disposed(by: self.disposeBag)
     }
-    
-    func result(rows: Int, closure: () -> String ) {
-        if rows <= 1 {
-            noteView.rightTextView.text = closure()
-        } else {
-            tempResult.append(closure())
-            noteView.rightTextView.text = tempResult + "\n" + closure()
-        }
-    }
-    
-    
-    func mathTest(textCount: Int, rows: Int, input: String) {
-        self.noteView.rightTextView.text.append("return")
-    }
-    
-    func math(startIndex: Int, endIndex: Int?, input: String) -> String {
-        var temp = ""
+
+    func splitPlusSeparator(_ string: String, separator: Character) -> [String] {
+        var result: Array<String> = []
+        var temp: Array<Character> = []
         
-        if let endIndex = endIndex {
-            let start = input.index(input.startIndex, offsetBy: startIndex)
-            let end = input.index(input.startIndex, offsetBy: endIndex)
-            //textViewIndex = endIndex
-            temp = String(input[start...end])
-
-        } else {
-            let fromIndex = input.index(input.startIndex, offsetBy: startIndex)
-            //let mySubstring = input[fromIndex...]
-            temp = String(input[fromIndex...])
-            //print("Start Index: ", startIndex)
-            //print(temp)
+        string.forEach { c in
+            guard c == "!" else { return temp.append(c) }
+            result.append(temp.map({String($0)}).joined(separator: ""))
+            result.append("\(c)")
+            temp = []
         }
+        result.append(temp.map({String($0)}).joined(separator: ""))
         
-        let expr = Parser.parse(string: temp)
-        let exprValue = expr?.evaluate()
-
-
-        if let value = exprValue {
-            return NSDecimalNumber(decimal: value).stringValue
-        } else {
-            return ""
-        }
-        
+        return result
     }
-
     
     func lineCounter(_ textView: UITextView) -> Int {
         let layoutManager:NSLayoutManager = textView.layoutManager
@@ -123,9 +81,6 @@ class NewNoteViewController: UIViewController {
         return numberOfLines
     }
     
-    func right() {
-        
-    }
 }
 
 //class CalcTextView: UITextView {
