@@ -18,7 +18,7 @@ class NoteViewController: UIViewController {
     
     private let noteView = NoteView()
     private let noteViewModel = NoteViewModel()
-    private let throttleIntervalInMilliseconds = 500
+    private let throttleIntervalInMilliseconds = 1500
     private let disposeBag = DisposeBag()
     
     override func loadView() {
@@ -41,12 +41,10 @@ class NoteViewController: UIViewController {
          
         setupCellConfiguration()
         
-        DispatchQueue.main.async {
-            self.noteView.tableView.reloadData()
-        }
         
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
     }
     
     @objc func listPressed() {
@@ -56,66 +54,38 @@ class NoteViewController: UIViewController {
     
     func setupCellConfiguration() {
         NoteViewModel.rxData
+            .observeOn(MainScheduler.asyncInstance)
+            .distinctUntilChanged()
+            .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
             .bind(to: noteView.tableView
                 .rx
                 .items(cellIdentifier: noteViewModel.NoteCellId, cellType: NoteTableViewCell.self)) { row, element, cell in
-                    DispatchQueue.main.async {
-                        cell.getText(text: element)
-                        
-                        cell.textView
-                            .rx
-                            .text
-                            .observeOn(MainScheduler.asyncInstance)
-                            .distinctUntilChanged()
-                            .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
-                            .subscribe(onNext: {
-                                NoteViewModel.defaults.set(NoteViewModel.rxData.value, forKey: "Data")
-                                //print(NoteViewModel.rxData.value)
-                                
-                                let checker = ($0 ?? "").replacingOccurrences(of: "% of ", with: "*0.01*")
-                                
-                                let expr = Parser.parse(string: checker)
-                                let exprValue = expr?.evaluate()
-                                cell.resultLabel.text = NSDecimalNumber(decimal: exprValue ?? 0).stringValue
-                                
-                                self.atrString(str: $0, textView: cell.textView)
-                                
-//                                if let textFont = cell.textView.font {
-//                                    let numLines = (cell.textView.contentSize.height / textFont.lineHeight) as? Int
-//                                    print(numLines)
-//                                }
-                                
-                                let layoutManager:NSLayoutManager = cell.textView.layoutManager
-                                let numberOfGlyphs = layoutManager.numberOfGlyphs
-                                var numberOfLines = 0
-                                var index = 0
-                                var lineRange:NSRange = NSRange()
-
-                                while (index < numberOfGlyphs) {
-                                    layoutManager.lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange)
-                                    index = NSMaxRange(lineRange);
-                                    numberOfLines = numberOfLines + 1
-                                }
-
-                                print(numberOfLines)
-
-                                
-                                
-                            })
-                            .disposed(by: self.disposeBag)
-                        
-                        if !cell.textView.isFirstResponder {
-                            UIView.performWithoutAnimation {
-                                cell.textView.becomeFirstResponder()
-                            }
-                        }
-                    }
                     
                     cell.textView.rx.didChange.subscribe(onNext: { [weak self] in
                         self?.noteView.tableView.beginUpdates()
                         self?.noteView.tableView.endUpdates()
                     })
                         .disposed(by: self.disposeBag)
+                    
+                    DispatchQueue.main.async {
+                        cell.getText(text: element)
+                    }
+                    
+                    //cell.responder()
+                    
+//                    if !cell.textView.isFirstResponder {
+//                        UIView.performWithoutAnimation {
+//                            cell.textView.becomeFirstResponder()
+//                        }
+//                    }
+                    
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                        if !cell.textView.isFirstResponder {
+//                            UIView.performWithoutAnimation {
+//                                cell.textView.becomeFirstResponder()
+//                            }
+//                        }
+//                    }
         }
         .disposed(by: disposeBag)
     }

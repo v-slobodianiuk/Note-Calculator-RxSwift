@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
-        NoteViewModel.loadData()
+        //NoteViewModel.loadData()
 
         return true
     }

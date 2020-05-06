@@ -26,14 +26,20 @@ class NoteViewModel {
         NoteViewModel.rxData.accept(update)
     }
     
-    func setupCell(_ textView: UITextView) {
-        if NoteViewModel.rxData.value.first == "" {
-            NoteViewModel.rxData.accept(["\(textView.text ?? "")"] + [""])
-        } else {
-            var update = NoteViewModel.rxData.value
-            update[NoteViewModel.rxData.value.count - 1] = "\(textView.text ?? "")"
-            NoteViewModel.rxData.accept(update + [""])
-        }
+//    func setupCell(_ textView: UITextView) {
+//        if NoteViewModel.rxData.value.first == "" {
+//            NoteViewModel.rxData.accept(["\(textView.text ?? "")"] + [""])
+//        } else {
+//            var update = NoteViewModel.rxData.value
+//            update[NoteViewModel.rxData.value.count - 1] = "\(textView.text ?? "")"
+//            NoteViewModel.rxData.accept(update + [""])
+//        }
+//    }
+    
+    func setupCell(_ textView: UITextView) {        
+        var update = NoteViewModel.rxData.value
+        update[NoteViewModel.rxData.value.count - 1] = "\(textView.text ?? "")"
+        NoteViewModel.rxData.accept(update + [""])
     }
     
     static func loadData() {

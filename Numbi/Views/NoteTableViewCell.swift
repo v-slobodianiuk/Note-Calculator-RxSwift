@@ -14,6 +14,7 @@ import MathParser
 class NoteTableViewCell: UITableViewCell {
     
     private let disposeBag = DisposeBag()
+    private let throttleIntervalInMilliseconds = 1500
     
     var noteViewModel = NoteViewModel()
     
@@ -28,6 +29,7 @@ class NoteTableViewCell: UITableViewCell {
         textView.delegate = self
         setupUI()
         constraints()
+        mathMethod()
     }
     
     func getText(text: String) {
@@ -64,13 +66,6 @@ class NoteTableViewCell: UITableViewCell {
             })
         .disposed(by: disposeBag)
         
-//        textView.rx.didChange.subscribe(onNext: {
-//            if self.textView.text.contains("\n") {
-//                print("Contains")
-//                self.noteViewModel.setupCell(self.textView)
-//            }
-//        })
-//        .disposed(by: self.disposeBag)
     }
     
     @objc func itemTapped(sender: UIBarButtonItem) {
@@ -83,6 +78,53 @@ class NoteTableViewCell: UITableViewCell {
             textView.inputView = keyboard
             textView.reloadInputViews()
         }
+    }
+    
+    func mathMethod() {
+        textView.rx.text
+//            .observeOn(MainScheduler.asyncInstance)
+//            .distinctUntilChanged()
+//            .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
+            .subscribe(onNext: {
+                //NoteViewModel.defaults.set(NoteViewModel.rxData.value, forKey: "Data")
+                //print(NoteViewModel.rxData.value)
+                
+                //self.noteViewModel.save(self.textView)
+                
+                let checker = ($0 ?? "").replacingOccurrences(of: "% of ", with: "*0.01*")
+                
+                let expr = Parser.parse(string: checker)
+                let exprValue = expr?.evaluate()
+                self.resultLabel.text = NSDecimalNumber(decimal: exprValue ?? 0).stringValue
+                
+                guard let ch = $0?.last else { return }
+                
+//                if ch == "\n" {
+//                    //print("return")
+//                    self.textView.deleteBackward()
+//                    self.noteViewModel.setupCell(self.textView)
+//                }
+                
+            })
+            .disposed(by: self.disposeBag)
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            if !self.textView.isFirstResponder {
+//                UIView.performWithoutAnimation {
+//                    self.textView.becomeFirstResponder()
+//                }
+//            }
+//        }
+    }
+    
+    func responder() {
+        self.textView.becomeFirstResponder()
+        //print(textView.isFirstResponder)
+//        if !self.textView.isFirstResponder {
+//            UIView.performWithoutAnimation {
+//                self.textView.becomeFirstResponder()
+//            }
+//        }
     }
     
     private func constraints() {
@@ -151,5 +193,16 @@ extension NoteTableViewCell: UITextViewDelegate {
             return false
         }
         return true
+    }
+//    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+//        print("should end")
+//        return true
+//    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print("did end")
+        DispatchQueue.main.async {
+            self.textView.becomeFirstResponder()
+        }
     }
 }
