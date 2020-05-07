@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
+        
+        do {
+            _ = try Realm()
+        } catch {
+            print("Error initialising Realm, \(error)")
+        }
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
 
         return true
     }

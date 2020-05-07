@@ -10,37 +10,48 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 class NoteViewModel {
+    
+    let realm = try! Realm()
+    var realmArray: Results<NoteData>?
+    
     let NoteNavTitle = "Numbi"
     let NoteCellId = "Note Cell"
-    //var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
-    static let defaults = UserDefaults.standard
     static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
     
-    func previousCell(textView: UITextView) {
-        guard NoteViewModel.rxData.value.count > 1 else { return }
-        guard textView.text == "" else { return }
-        var update = NoteViewModel.rxData.value
-        update.removeLast()
-        NoteViewModel.rxData.accept(update)
+    // MARK: - Realm Methods
+    func sendToRealm(_ string: String) {
+        realmArray = nil
+        let lastImage = NoteData()
+        lastImage.noteText = string
+        lastImage.dateCreated = Date()
+        self.save(data: lastImage)
+        let test = realmArray?[0].noteText
     }
     
-    func setupCell(_ textView: UITextView) {
-        if NoteViewModel.rxData.value.first == "" {
-            NoteViewModel.rxData.accept(["\(textView.text ?? "")"] + [""])
-        } else {
-            var update = NoteViewModel.rxData.value
-            update[NoteViewModel.rxData.value.count - 1] = "\(textView.text ?? "")"
-            NoteViewModel.rxData.accept(update + [""])
-        }
-    }
-    
-    static func loadData() {
-        if NoteViewModel.defaults.object(forKey: "Data") != nil {
-            if let saveData = NoteViewModel.defaults.object(forKey: "Data") as? [String] {
-                NoteViewModel.rxData.accept(saveData)
+    func save(data: NoteData) {
+        do {
+            try realm.write {
+                realm.add(data)
             }
+        } catch {
+            print("Error saving context, \(error)")
         }
+    }
+    
+    func clearRealm() {
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+        } catch {
+            print("Error removing items, \(error)")
+        }
+    }
+    
+    func loadHistory() {
+        realmArray = realm.objects(NoteData.self)
     }
 }

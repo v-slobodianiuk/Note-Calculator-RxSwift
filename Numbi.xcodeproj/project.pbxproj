@@ -13,6 +13,7 @@
 		D5007074245FEF0400B0628C /* ListViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5007073245FEF0400B0628C /* ListViewDataModel.swift */; };
 		D51773F1245B2FAE00B067CC /* NumbiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */; };
 		D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F2245B3A5000B067CC /* KeyboardButton.swift */; };
+		D5B25BAA2464265F004C0EE4 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B25BA92464265F004C0EE4 /* ListView.swift */; };
 		D5DD394C2460A11D0001A8FE /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */; };
 		D5DD394E2460A4360001A8FE /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD394D2460A4360001A8FE /* NewNoteView.swift */; };
 		D5F4923424521818006A8878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4923324521818006A8878 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 		D5007073245FEF0400B0628C /* ListViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataModel.swift; sourceTree = "<group>"; };
 		D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbiKeyboard.swift; sourceTree = "<group>"; };
 		D51773F2245B3A5000B067CC /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
+		D5B25BA92464265F004C0EE4 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
 		D5DD394D2460A4360001A8FE /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		D5F4923024521818006A8878 /* Numbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +100,33 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D5B25BAB24642BAB004C0EE4 /* Numbi Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */,
+				D51773F2245B3A5000B067CC /* KeyboardButton.swift */,
+			);
+			path = "Numbi Keyboard";
+			sourceTree = "<group>";
+		};
+		D5B25BAC24642BC0004C0EE4 /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				D5007071245FEE2000B0628C /* ListViewController.swift */,
+				D5B25BA92464265F004C0EE4 /* ListView.swift */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
+		D5B25BAD24642BD0004C0EE4 /* New Note View */ = {
+			isa = PBXGroup;
+			children = (
+				D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */,
+				D5DD394D2460A4360001A8FE /* NewNoteView.swift */,
+			);
+			path = "New Note View";
+			sourceTree = "<group>";
+		};
 		D5F4922724521818006A8878 = {
 			isa = PBXGroup;
 			children = (
@@ -144,11 +173,9 @@
 		D5F4925D24523AC6006A8878 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */,
-				D5DD394D2460A4360001A8FE /* NewNoteView.swift */,
-				D5007071245FEE2000B0628C /* ListViewController.swift */,
-				D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */,
-				D51773F2245B3A5000B067CC /* KeyboardButton.swift */,
+				D5B25BAD24642BD0004C0EE4 /* New Note View */,
+				D5B25BAC24642BC0004C0EE4 /* ListView */,
+				D5B25BAB24642BAB004C0EE4 /* Numbi Keyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,6 +366,7 @@
 			files = (
 				D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */,
 				D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */,
+				D5B25BAA2464265F004C0EE4 /* ListView.swift in Sources */,
 				D5DD394E2460A4360001A8FE /* NewNoteView.swift in Sources */,
 				D5DD394C2460A11D0001A8FE /* NewNoteViewController.swift in Sources */,
 				D5007072245FEE2000B0628C /* ListViewController.swift in Sources */,

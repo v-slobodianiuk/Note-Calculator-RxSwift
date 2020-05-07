@@ -8,6 +8,7 @@ target 'Numbi' do
   # Pods for Numbi
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
+  pod 'RealmSwift'
   pod 'MathParser'
 
   target 'NumbiTests' do

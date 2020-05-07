@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct NoteData {
-    let noteText: String
+class NoteData: Object {
+    @objc dynamic var noteText: String?
+    @objc dynamic var dateCreated: Date?
 }
