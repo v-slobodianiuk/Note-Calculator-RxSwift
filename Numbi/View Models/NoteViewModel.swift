@@ -11,15 +11,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RealmSwift
+import RxRealm
 
 class NoteViewModel {
     
     let realm = try! Realm()
-    var realmArray: Results<NoteData>?
+    var realmArray: Results<NoteData>!
     
     let NoteNavTitle = "Numbi"
     let NoteCellId = "Note Cell"
-    static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
+    //static var rxData: BehaviorRelay<[String]> = BehaviorRelay(value: [""])
     
     // MARK: - Realm Methods
     func sendToRealm(_ string: String) {
@@ -28,7 +29,7 @@ class NoteViewModel {
         lastImage.noteText = string
         lastImage.dateCreated = Date()
         self.save(data: lastImage)
-        let test = realmArray?[0].noteText
+        //let test = realmArray?[0].noteText
     }
     
     func save(data: NoteData) {

@@ -17,15 +17,18 @@ class ListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        constraints()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        constraints()
+        
     }
     
     private func setupUI() {
         self.backgroundColor = .white
+        tableView.backgroundColor = .blue
+        addSubview(tableView)
     }
     
     private func constraints() {

@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let rootVC = NewNoteViewController()
+        //let rootVC = NewNoteViewController()
+        let rootVC = ListViewController()
         let navigationController = UINavigationController(rootViewController: rootVC)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

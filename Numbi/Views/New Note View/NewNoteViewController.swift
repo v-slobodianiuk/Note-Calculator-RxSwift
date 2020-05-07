@@ -9,6 +9,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
+import RxRealm
 import MathParser
 
 class NewNoteViewController: UIViewController {
@@ -23,12 +25,25 @@ class NewNoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         title = "Numbi"
+        
+        if #available(iOS 13, *) {
+            let leftButton = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .plain, target: self, action: #selector(listPressed))
+            let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+            self.navigationItem.leftBarButtonItem = leftButton
+            self.navigationItem.rightBarButtonItem = rightButton
+        }
         
         noteView.leftTextView.becomeFirstResponder()
         
         setupInputView()
+    }
+    
+    @objc func listPressed() {
+        let menuVC = ListViewController()
+           self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
     func setupInputView() {

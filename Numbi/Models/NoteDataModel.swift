@@ -10,6 +10,6 @@ import Foundation
 import RealmSwift
 
 class NoteData: Object {
-    @objc dynamic var noteText: String?
+    @objc dynamic var noteText: String = "Hello World"
     @objc dynamic var dateCreated: Date?
 }
