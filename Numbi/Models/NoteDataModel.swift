@@ -10,6 +10,11 @@ import Foundation
 import RealmSwift
 
 class NoteData: Object {
+    @objc dynamic var id = 0
     @objc dynamic var noteText: String = "Hello World"
     @objc dynamic var dateCreated: Date?
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

@@ -511,7 +511,8 @@ public extension Observable where Element: Object {
             let token = object.observe { change in
                 switch change {
                 case let .change(changedProperties):
-                    if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
+                    //if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
+                    if let properties = properties, !changedProperties.contains(where: { return properties.contains($0.name) }) {
                         // if change property isn't an observed one, just return
                         return
                     }

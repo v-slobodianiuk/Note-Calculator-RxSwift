@@ -9,115 +9,80 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RealmSwift
-import RxRealm
-import MathParser
 
 class NewNoteViewController: UIViewController {
     
+    var viewModel: NoteViewModel
+    
     private let noteView = NewNoteView()
-    private let throttleIntervalInMilliseconds = 500
+    private let realmService = RealmService()
     private let disposeBag = DisposeBag()
+    private let throttleIntervalInMilliseconds = 1000
+    
+    init(viewModel: NoteViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func loadView() {
         self.view = noteView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         
-        title = "Numbi"
+        NoteViewModel.lastNote = viewModel.defaults.integer(forKey: viewModel.userDefaultsKey)
+        viewModel.appStart(at: NoteViewModel.lastNote)
+        realmService.loadData(noteView.leftTextView, row: NoteViewModel.lastNote)
+        setupNavItems()
+        setupInputView()
+        
+        noteView.leftTextView.becomeFirstResponder()
+    }
+    
+    func setupNavItems() {
+        self.title = viewModel.title
         
         if #available(iOS 13, *) {
             let leftButton = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .plain, target: self, action: #selector(listPressed))
-            let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+            let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newNotePressed))
             self.navigationItem.leftBarButtonItem = leftButton
             self.navigationItem.rightBarButtonItem = rightButton
         }
-        
-        noteView.leftTextView.becomeFirstResponder()
-        
-        setupInputView()
+    }
+    
+    @objc func newNotePressed() {
+        realmService.addNewNote()
+        NoteViewModel.lastNote = realmService.last()
+        realmService.loadData(noteView.leftTextView, row: realmService.last())
     }
     
     @objc func listPressed() {
-        let menuVC = ListViewController()
-           self.navigationController?.pushViewController(menuVC, animated: true)
+        let menuVC = ListViewController(viewModel: ListViewModel())
+        menuVC.selectedRow.subscribe(onNext: { [weak self] selectedRow in
+            guard let self = self else { return }
+            self.realmService.loadData(self.noteView.leftTextView, row: selectedRow)
+            NoteViewModel.self.lastNote = selectedRow
+            self.viewModel.defaults.set(NoteViewModel.lastNote, forKey: self.viewModel.userDefaultsKey)
+        })
+            .disposed(by: disposeBag)
+        self.navigationController?.pushViewController(menuVC, animated: true)
     }
     
     func setupInputView() {
         noteView.leftTextView.rx.text
-            .observeOn(MainScheduler.asyncInstance)
-            .distinctUntilChanged()
-            .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
-            .subscribe(onNext: {
+            //            .observeOn(MainScheduler.asyncInstance)
+            //            .distinctUntilChanged()
+            //            .throttle(.milliseconds(self.throttleIntervalInMilliseconds), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
                 
-                var input = $0!.split(separator: "\n", omittingEmptySubsequences: false)
-                let result = input.transformOmittingEmptySubsequences("\n").map { String($0).math() }.joined(separator: "\n")
+                self.noteView.rightTextView.text = self.viewModel.getResult(input: text)
+                self.atrString(str: text, textView: self.noteView.leftTextView)
                 
-                self.noteView.rightTextView.text = result //String(format: "%.2f", result)
-                
-                //self.atrString(str: result, textView: self.noteView.leftTextView)
+                self.realmService.saveData(input: text)
             })
             .disposed(by: self.disposeBag)
-    }
-    
-        func atrString(str: String?, textView: UITextView) {
-            let aString = self.customizeColor(string: "\(str ?? "")", color: UIColor.black)
-            
-    //        let chArray: Set<Character> = ["+", "-", "*", "/", "%"]
-    //
-    //        for c in chArray {
-    //            if (str?.contains("\(c)"))! {
-    //
-    //                let r1 = str!.range(of: "\(c)")!
-    //                let atr = self.customizeColor(string: "\(c)", color: UIColor.systemOrange)
-    //                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-    //                }
-    //        }
-            
-            
-            if (str?.contains("+"))! {
-                
-                let r1 = str!.range(of: "+")!
-                let atr = self.customizeColor(string: "+", color: UIColor.systemOrange)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            if (str?.contains("-"))! {
-                
-                let r1 = str!.range(of: "-")!
-                let atr = self.customizeColor(string: "-", color: UIColor.systemOrange)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            if (str?.contains("*"))! {
-                
-                let r1 = str!.range(of: "*")!
-                let atr = self.customizeColor(string: "*", color: UIColor.systemOrange)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            if (str?.contains("/"))! {
-                
-                let r1 = str!.range(of: "/")!
-                let atr = self.customizeColor(string: "/", color: UIColor.systemOrange)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            if (str?.contains("%"))! {
-                
-                let r1 = str!.range(of: "%")!
-                let atr = self.customizeColor(string: "%", color: UIColor.systemOrange)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            
-            if (str?.contains("of"))! {
-                
-                let r1 = str!.range(of: "of")!
-                let atr = self.customizeColor(string: "of", color: UIColor.systemPurple)
-                aString.replaceCharacters(in: NSRange(r1, in: str!), with: atr)
-            }
-            
-            //l1AttrString.append(self.customizeColor(string: "!", color: UIColor.red))
-            textView.attributedText = aString
     }
     
     func  customizeColor(string: String, color: UIColor) -> NSMutableAttributedString {
@@ -128,23 +93,33 @@ class NewNoteViewController: UIViewController {
         
         return NSMutableAttributedString(string: string, attributes: attributes)
     }
-}
-
-extension String {
-    func math() -> String {
-        let expr = Parser.parse(string: self)
-        guard let exprValue = expr?.evaluate() else { return "" }
-        return NSDecimalNumber(decimal: exprValue).stringValue
-    }
-}
-
-extension Array where Element == Substring {
-    mutating func transformOmittingEmptySubsequences (_ character: Substring) -> [Substring] {
-        for i in 0..<self.count {
-            if self[i] == "" {
-                self[i] = character
+    
+    func atrString(str: String?, textView: UITextView) {
+        
+        guard let text = str else { return }
+        let aString = self.customizeColor(string: "\(text)", color: UIColor.black)
+        
+        let replacements = [
+            //#"\D"#: UIColor.systemPurple, // Буквы
+            //#"[\D&&[^\W]]"#: UIColor.systemPurple, // Буквы
+            #"[\W&&[^#]]"#: UIColor.systemRed, // Символы
+            #"\d"#: UIColor.systemBlue, // Цифры
+            "[#]{2,}(.*)":UIColor.systemOrange, // ## для комментов
+        ]
+        
+        for (pattern, attributes) in replacements {
+            let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+            let range = NSRange(text.startIndex..., in: text)
+            let matches = regex.matches(in: text, options: [], range: range)
+            for match in matches {
+                let matchRange = match.range
+                aString.addAttribute(NSAttributedString.Key.foregroundColor, value: attributes, range: matchRange)
             }
         }
-        return self
+        textView.attributedText = aString
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -9,51 +9,86 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RealmSwift
 import RxRealm
 
 class ListViewController: UIViewController {
     
+    private let viewModel: ListViewModel
     private let listView = ListView()
-    let disposeBag = DisposeBag()
+    private let realmService = RealmService()
+    private let privateSelectedRow = PublishSubject<Int>()
+    private let disposeBag = DisposeBag()
     
-    //let noteViewModel = NoteViewModel()
-    let realm = try! Realm()
-    var data: Results<NoteData>!
+    var selectedRow: Observable<Int> {
+        return privateSelectedRow.asObservable()
+    }
     
-    
-    let array = Observable.just(["1", "2", "3"])
-    
-    //var data = Observable.just(NoteViewModel.realmArray)
+    init(viewModel: ListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func loadView() {
         self.view = listView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "List Cell")
+        viewModel.getDataCell()
+        removeEmpty()
         
-        data = realm.objects(NoteData.self)
+        listView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: viewModel.cell)
+        
+        setupNavItems()
         setupTable()
+        setupCellTapHandling()
+    }
+    
+    func removeEmpty() {
+        realmService.removeData()
+        self.privateSelectedRow.onNext(realmService.last())
+    }
+    
+    func setupNavItems() {
+        title = viewModel.title
+        
+        if #available(iOS 13, *) {
+            let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newNotePressed))
+            self.navigationItem.rightBarButtonItem = rightButton
+        }
+    }
+    
+    @objc func newNotePressed() {
+        realmService.addNewNote()
+        
+        self.privateSelectedRow.onNext(realmService.last())
+        self.privateSelectedRow.onCompleted()
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func setupTable() {
-        print("setuped")
-        //Observable.from(optional: data)
-        array
+        Observable.array(from: viewModel.data)
             .bind(to: listView.tableView
-          .rx
-          .items(cellIdentifier: "List Cell", cellType: UITableViewCell.self)) { row, element, cell in
-                  //cell.configureWithChocolate(chocolate: chocolate)
-                    print(element)
-                    cell.textLabel?.text = String(row)
+                .rx
+                .items(cellIdentifier: viewModel.cell, cellType: UITableViewCell.self)) { row, element, cell in
+                    cell.textLabel?.text = element.noteText
         }
         .disposed(by: disposeBag)
     }
     
-    deinit {
-        print("deinited")
+    func setupCellTapHandling() {
+        listView.tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                self.privateSelectedRow.onNext(indexPath.row)
+                self.privateSelectedRow.onCompleted()
+                self.navigationController?.popToRootViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

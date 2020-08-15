@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let window = UIWindow(frame: UIScreen.main.bounds)
-        //let rootVC = NewNoteViewController()
-        let rootVC = ListViewController()
+        let rootVC = NewNoteViewController(viewModel: NoteViewModel())
         let navigationController = UINavigationController(rootViewController: rootVC)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -30,9 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Error initialising Realm, \(error)")
         }
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        //print(Realm.Configuration.defaultConfiguration.fileURL!)
 
         return true
+    }
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("applicationWillResignActive")
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("applicationWillEnterForeground")
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        print("applicationWillTerminate")
+        
     }
 }
 

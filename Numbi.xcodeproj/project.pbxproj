@@ -10,9 +10,10 @@
 		0D678F60BCE6D2BFBEFC9C1D /* Pods_NumbiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 266DA017059E701261EF416C /* Pods_NumbiTests.framework */; };
 		80792240CD41D416241676AA /* Pods_Numbi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF15348B136BF85912D63D89 /* Pods_Numbi.framework */; };
 		D5007072245FEE2000B0628C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5007071245FEE2000B0628C /* ListViewController.swift */; };
-		D5007074245FEF0400B0628C /* ListViewDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5007073245FEF0400B0628C /* ListViewDataModel.swift */; };
 		D51773F1245B2FAE00B067CC /* NumbiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */; };
 		D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51773F2245B3A5000B067CC /* KeyboardButton.swift */; };
+		D5505F6A246AD9E3003A9C44 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5505F69246AD9E3003A9C44 /* ListViewModel.swift */; };
+		D5614FAC2477D44D009E3D1A /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5614FAB2477D44D009E3D1A /* RealmService.swift */; };
 		D5B25BAA2464265F004C0EE4 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B25BA92464265F004C0EE4 /* ListView.swift */; };
 		D5DD394C2460A11D0001A8FE /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */; };
 		D5DD394E2460A4360001A8FE /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DD394D2460A4360001A8FE /* NewNoteView.swift */; };
@@ -42,9 +43,10 @@
 		BD8A96ECCDCC7FC3F3736C83 /* Pods-Numbi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Numbi.debug.xcconfig"; path = "Target Support Files/Pods-Numbi/Pods-Numbi.debug.xcconfig"; sourceTree = "<group>"; };
 		CF15348B136BF85912D63D89 /* Pods_Numbi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Numbi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5007071245FEE2000B0628C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		D5007073245FEF0400B0628C /* ListViewDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataModel.swift; sourceTree = "<group>"; };
 		D51773F0245B2FAE00B067CC /* NumbiKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbiKeyboard.swift; sourceTree = "<group>"; };
 		D51773F2245B3A5000B067CC /* KeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButton.swift; sourceTree = "<group>"; };
+		D5505F69246AD9E3003A9C44 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		D5614FAB2477D44D009E3D1A /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		D5B25BA92464265F004C0EE4 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		D5DD394B2460A11D0001A8FE /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
 		D5DD394D2460A4360001A8FE /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D5614FAD2477D454009E3D1A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D5614FAB2477D44D009E3D1A /* RealmService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D5B25BAB24642BAB004C0EE4 /* Numbi Keyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				D5F4923324521818006A8878 /* AppDelegate.swift */,
+				D5614FAD2477D454009E3D1A /* Services */,
 				D5F4926224523B5B006A8878 /* Models */,
 				D5F492662452424D006A8878 /* View Models */,
 				D5F4925D24523AC6006A8878 /* Views */,
@@ -192,7 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				D5F4926324523D84006A8878 /* NoteViewModel.swift */,
-				D5007073245FEF0400B0628C /* ListViewDataModel.swift */,
+				D5505F69246AD9E3003A9C44 /* ListViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -364,13 +375,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5505F6A246AD9E3003A9C44 /* ListViewModel.swift in Sources */,
+				D5614FAC2477D44D009E3D1A /* RealmService.swift in Sources */,
 				D51773F3245B3A5000B067CC /* KeyboardButton.swift in Sources */,
 				D5F4926424523D84006A8878 /* NoteViewModel.swift in Sources */,
 				D5B25BAA2464265F004C0EE4 /* ListView.swift in Sources */,
 				D5DD394E2460A4360001A8FE /* NewNoteView.swift in Sources */,
 				D5DD394C2460A11D0001A8FE /* NewNoteViewController.swift in Sources */,
 				D5007072245FEE2000B0628C /* ListViewController.swift in Sources */,
-				D5007074245FEF0400B0628C /* ListViewDataModel.swift in Sources */,
 				D5F4923424521818006A8878 /* AppDelegate.swift in Sources */,
 				D51773F1245B2FAE00B067CC /* NumbiKeyboard.swift in Sources */,
 				D5F4926124523B54006A8878 /* NoteDataModel.swift in Sources */,

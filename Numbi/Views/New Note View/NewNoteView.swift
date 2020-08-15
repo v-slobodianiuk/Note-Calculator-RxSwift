@@ -12,11 +12,14 @@ import RxCocoa
 
 class NewNoteView: UIView {
     
-    var leftTextView = UITextView()
-    var rightTextView = UITextView()
+    lazy var leftTextView = UITextView()
+    lazy var rightTextView = UITextView()
+    //lazy var rightTextView = UILabel()
     var keyboard: NumbiKeyboard!
     var keyboardBar: UIToolbar!
     private let disposeBag = DisposeBag()
+    
+    lazy var arbitraryValue: Int = -1
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,18 +37,25 @@ class NewNoteView: UIView {
         self.addSubview(leftTextView)
         self.addSubview(rightTextView)
         
-        //leftTextView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.2)
-        //rightTextView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.9)
-        
         leftTextView.font = .systemFont(ofSize: 18)
         rightTextView.font = .boldSystemFont(ofSize: 18)
+        //rightTextView.numberOfLines = 0
+        //rightTextView.adjustsFontSizeToFitWidth = true
         rightTextView.isEditable = false
         rightTextView.textAlignment = .right
         
         keyboardBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
         let defaultKeyboard = UIBarButtonItem(title: "ABC", style: .plain, target: self, action: #selector(itemTapped))
         let numbiKeyboard = UIBarButtonItem(title: "123", style: .plain, target: self, action: #selector(itemTapped))
-        keyboardBar.items = [defaultKeyboard, numbiKeyboard]
+        let hideKeyboard = UIBarButtonItem(title: "⌨️", style: .plain, target: self, action: #selector(itemTapped))
+        // Flexible Space
+        let flexibleSpace: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let leftwards = UIBarButtonItem(title: "←", style: .plain, target: self, action: #selector(itemTapped))
+        // Fixed Space
+        let fixedSpace: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 20.0
+        let rightwards = UIBarButtonItem(title: "→", style: .plain, target: self, action: #selector(itemTapped))
+        keyboardBar.items = [defaultKeyboard, numbiKeyboard, hideKeyboard, flexibleSpace, leftwards, fixedSpace, rightwards]
         leftTextView.autocorrectionType = .no
         leftTextView.inputAccessoryView = keyboardBar
         
@@ -53,25 +63,43 @@ class NewNoteView: UIView {
         leftTextView.inputView = keyboard
         
         keyboard.keyTitle
-            .subscribe(onNext: { keyValue in
+            .subscribe(onNext: { [weak self] keyValue in
+                guard let self = self else { return }
                 self.keyWasTapped(character: keyValue)
-
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
     }
     
     @objc func itemTapped(sender: UIBarButtonItem) {
-         guard let title = sender.title else { return }
-         switch title {
-         case "ABC":
+        guard let title = sender.title else { return }
+        switch title {
+        case "ABC":
             leftTextView.inputView = .none
             leftTextView.reloadInputViews()
-         default:
-             leftTextView.inputView = keyboard
-             leftTextView.reloadInputViews()
-         }
-     }
+        case "⌨️":
+            leftTextView.resignFirstResponder()
+        case "←":
+            moveCursor(leftTextView, offset: -1)
+        case "→":
+            moveCursor(leftTextView, offset: +1)
+        default:
+            leftTextView.inputView = keyboard
+            leftTextView.reloadInputViews()
+        }
+    }
+    
+    func moveCursor(_ textView: UITextView, offset: Int) {
+
+        // only if there is a currently selected range
+        guard let selectedRange = textView.selectedTextRange else { return }
+
+        // and only if the new position is valid
+        guard let newPosition = textView.position(from: selectedRange.start, offset: offset) else  { return }
+
+        // set the new position
+        textView.selectedTextRange = textView.textRange(from: newPosition, to: newPosition)
+    }
     
     func deleteWasTapped() {
         leftTextView.deleteBackward()

@@ -12,36 +12,36 @@ import RxCocoa
 
 class NumbiKeyboard: UIView {
     
+    private let disposeBag = DisposeBag()
+    
     private let keyTitleSubject = PublishSubject<String>()
     var keyTitle: Observable<String> {
-      return keyTitleSubject.asObservable()
+        return keyTitleSubject.asObservable()
     }
     
-    var mainStackView = UIStackView()
-    var topStackView = UIStackView()
-    var bottomStackView = UIStackView()
-    var firstInputBoardStackView = UIStackView()
-    var firstHorizontalStackView = UIStackView()
-    var secondHorizontalStackView = UIStackView()
-    var thirdHorizontalStackView = UIStackView()
-    var fourthHorizontalStackView = UIStackView()
-    var scrollView = UIScrollView()
-    var testView1 = UIView()
-    var testView2 = UIView()
-    var testView3 = UIView()
-    var pageControl = UIPageControl()
+    lazy var mainStackView = UIStackView()
+    lazy var topStackView = UIStackView()
+    lazy var bottomStackView = UIStackView()
+    lazy var firstInputBoardStackView = UIStackView()
+    lazy var firstHorizontalStackView = UIStackView()
+    lazy var secondHorizontalStackView = UIStackView()
+    lazy var thirdHorizontalStackView = UIStackView()
+    lazy var fourthHorizontalStackView = UIStackView()
+    lazy var scrollView = UIScrollView()
+    lazy var testView1 = UIView()
+    lazy var testView2 = UIView()
+    lazy var testView3 = UIView()
+    lazy var pageControl = UIPageControl()
     
     let orangeArray = [3, 4, 8, 9, 13, 14, 18, 19]
-    var slides = [UIView] ()
+    lazy var slides = [UIView] ()
     
-    var buttons: [KeyboardButton] = []
-    var buttonsTitle = ["7", "8", "9", " ", " ",
+    lazy var buttons: [KeyboardButton] = []
+    lazy var buttonsTitle = ["7", "8", "9", "🙂", "🙃",
                         "4", "5", "6", "×", "÷",
                         "1", "2", "3", "+", "−",
                         ".", "0", "-", " ", " ",
     ]
-    
-    private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,8 +65,6 @@ class NumbiKeyboard: UIView {
     }
     
     private func setupUI() {
-        //self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
-        
         self.backgroundColor = UIColor(red: 210/255, green: 213/255, blue: 219/255, alpha: 1.0)
         
         self.addSubview(mainStackView)
@@ -76,7 +74,6 @@ class NumbiKeyboard: UIView {
         mainStackView.axis = .vertical
         mainStackView.alignment = .fill
         mainStackView.distribution = .fill
-        //stackView.contentMode = .center
         mainStackView.spacing = 0
         
         firstInputBoardStackView.axis = .vertical
@@ -87,7 +84,7 @@ class NumbiKeyboard: UIView {
         for (i, button) in buttons.enumerated() {
             button.setTitle("\(buttonsTitle[i])", for: .normal)
             button.tag = i
-
+            
             button.rx.tap.bind {
                 self.tappedButton(sender: button)
             }
@@ -101,7 +98,6 @@ class NumbiKeyboard: UIView {
             buttons[19].setImage(UIImage(systemName: "return"), for: .normal)
         }
         
-
         topStackView.addArrangedSubview(scrollView)
         bottomStackView.addArrangedSubview(pageControl)
         
@@ -111,7 +107,6 @@ class NumbiKeyboard: UIView {
         setupHorizontalStackView(for: secondHorizontalStackView)
         setupHorizontalStackView(for: thirdHorizontalStackView)
         setupHorizontalStackView(for: fourthHorizontalStackView)
-
         
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -124,7 +119,6 @@ class NumbiKeyboard: UIView {
         let testViewArray = [testView1, testView2, testView3]
         
         for view in testViewArray {
-            
             view.translatesAutoresizingMaskIntoConstraints = false
             scrollView.addSubview(view)
             
@@ -132,13 +126,14 @@ class NumbiKeyboard: UIView {
             view.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
             view.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: 0).isActive = true
             view.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0).isActive = true
-
+            
             leadingAnchor = view.trailingAnchor
         }
         
         self.scrollView.trailingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         
-        scrollView.rx.didScroll.subscribe(onNext: {
+        scrollView.rx.didScroll.subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
             let pageIndex = round(self.scrollView.contentOffset.x/self.frame.width)
             self.pageControl.currentPage = Int(pageIndex)
         })
@@ -146,7 +141,6 @@ class NumbiKeyboard: UIView {
         
         pageControl.numberOfPages = testViewArray.count
         pageControl.currentPage = 0
-        //self.bringSubviewToFront(pageControl)
     }
     
     private func constraints() {
@@ -190,19 +184,19 @@ class NumbiKeyboard: UIView {
         for i in 0...4 {
             firstHorizontalStackView.addArrangedSubview(buttons[i])
         }
-
+        
         for i in 5...9 {
             secondHorizontalStackView.addArrangedSubview(buttons[i])
         }
-
+        
         for i in 10...14 {
             thirdHorizontalStackView.addArrangedSubview(buttons[i])
         }
-
+        
         for i in 15...19 {
             fourthHorizontalStackView.addArrangedSubview(buttons[i])
         }
-
+        
         firstInputBoardStackView.addArrangedSubview(firstHorizontalStackView)
         firstInputBoardStackView.addArrangedSubview(secondHorizontalStackView)
         firstInputBoardStackView.addArrangedSubview(thirdHorizontalStackView)
@@ -230,7 +224,6 @@ class NumbiKeyboard: UIView {
     }
     
     func tappedButton(sender: UIButton) {
-
         guard let keyLabel = sender.titleLabel?.text else { return }
         keyTitleSubject.on(.next(keyLabel))
         
@@ -241,7 +234,7 @@ class NumbiKeyboard: UIView {
             keyTitleSubject.on(.next("return"))
         }
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
